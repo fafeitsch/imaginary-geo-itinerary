@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" class="h-100">
+<html class="h-100" lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="src/styles/reset.css" rel="stylesheet" type="text/css">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link href="src/styles/reset.css" rel="stylesheet" type="text/css" />
     <title>Vite + TS</title>
   </head>
-  <body class='w-100 h-100'>
-    <div class="h-100 w-100" id="map"></div>
-    <script type="module" src="/src/main.ts"></script>
+  <body class="w-100 h-100 d-flex">
+    <div id="tracks-container" class="p-3 d-flex flex-column gap-3"></div>
+    <div class="h-100 flex-grow-1" id="map"></div>
+    <script src="/src/main.ts" type="module"></script>
   </body>
 </html>

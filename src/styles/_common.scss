@@ -2,6 +2,14 @@
  * Licensed under the MIT License (https://opensource.org/licenses/MIT).
  * Find the full license text in the LICENSE file of the project root.
  */
+.h-100 {
+  height: 100%;
+}
+
+.w-100 {
+  width: 100%;
+}
+
 .d-block {
   display: block;
 }
@@ -22,6 +30,14 @@ a {
 
 .disabled {
   opacity: 0.5;
+}
+
+.text-disabled {
+  color: gray;
+}
+
+.bold {
+  font-weight: lighter;
 }
 
 .no-wrap {
