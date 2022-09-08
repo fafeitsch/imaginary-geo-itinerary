@@ -4,6 +4,7 @@ import { initMap } from './map';
 import store from './store';
 import { initTrackList } from './tracklist';
 import { Group, Track } from './store.types';
+import { initImageOutlet } from './image';
 
 fetch('itinerary/index.json')
   .then((response) => response.json())
@@ -19,3 +20,4 @@ fetch('itinerary/index.json')
 
 initMap(document.getElementById('map')!);
 initTrackList(document.getElementById('tracks-container')!);
+initImageOutlet(document.getElementById('image-outlet')! as HTMLImageElement);

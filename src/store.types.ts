@@ -15,4 +15,10 @@ export interface Group {
   tracks: Track[];
   id: string;
   visible: boolean;
+  images: Image[];
+}
+
+export interface Image {
+  url: string;
+  location: [number, number];
 }

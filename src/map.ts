@@ -9,6 +9,9 @@ export function initMap(element: HTMLElement) {
   const url = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
   tileLayer(url).addTo(leafletMap);
   let trackLayers: any[] = [];
+  leafletMap.on('click', (event) => {
+    console.log([event.latlng.lat, event.latlng.lng]);
+  });
   store.get.groups$.subscribe((groups) => {
     trackLayers.forEach((layer) => leafletMap.removeLayer(layer));
     trackLayers = groups
