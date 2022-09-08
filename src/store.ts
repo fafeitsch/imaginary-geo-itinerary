@@ -1,12 +1,12 @@
 import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
-import { Track } from './store.types';
+import { Group, Itinerary } from './store.types';
 
 interface State {
-  tracks: Track[];
+  groups: Group[];
 }
 
 const state: State = {
-  tracks: [],
+  groups: [],
 };
 
 const state$ = new BehaviorSubject<State>(state);
@@ -17,22 +17,45 @@ export default {
     observable$.pipe(takeUntil(destroy$)).subscribe();
   },
   get: {
-    tracks$: state$.pipe(map((state) => state.tracks)),
+    groups$: state$.pipe(map((state) => state.groups)),
   },
   set: {
-    tracks(tracks: Track[]) {
-      state$.next({ ...state$.value, tracks });
+    itinerary(itinerary: Itinerary) {
+      state$.next({ ...state$.value, groups: itinerary.groups });
     },
-    toggleTrackVisibility(url: string) {
+    trackLength(groupId: string, trackId: string, length: number) {
+      const group = state$.value.groups.find((group) => group.id === groupId);
+      if (!group) {
+        return;
+      }
+      const newTrack = group.tracks.find((track) => track.id === trackId);
+      if (!newTrack) {
+        return;
+      }
+      newTrack.length = length;
+      const newGroup = {
+        ...group,
+        tracks: group.tracks.map((track) =>
+          track.id === trackId ? { ...newTrack } : track
+        ),
+      };
       state$.next({
         ...state$.value,
-        tracks: state$.value.tracks.map((track) =>
-          track.url === url
+        groups: state$.value.groups.map((group) =>
+          group.id === groupId ? newGroup : group
+        ),
+      });
+    },
+    toggleGroupVisibility(id: string) {
+      state$.next({
+        ...state$.value,
+        groups: state$.value.groups.map((group) =>
+          group.id === id
             ? {
-                ...track,
-                visible: !track.visible,
+                ...group,
+                visible: !group.visible,
               }
-            : track
+            : group
         ),
       });
     },

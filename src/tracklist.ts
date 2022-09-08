@@ -1,25 +1,34 @@
-import { Track } from './store.types';
 import store from './store';
 
-export function initTrackList(element: HTMLElement, tracks: Track[]) {
-  tracks
-    .map((track) => {
-      let visible = track.visible;
-      const item = document.createElement('div');
-      item.id = `track-item-${track.id}`;
-      item.innerHTML = `<span>${track.name}</span>
-        <div class=\"d-flex text-disabled\"><span class=\"distance\"></span> <span class=\"ml-2">km</span></div>`;
-      item.className = 'd-flex flex-column pointer-cursor bold';
+export function initTrackList(element: HTMLElement) {
+  const template = document.getElementById(
+    'group-item-template'
+  )! as HTMLTemplateElement;
+  store.get.groups$.subscribe((groups) => {
+    element.innerHTML = '';
+    groups.forEach((group) => {
+      const item = template.content
+        .querySelector('div')!
+        .cloneNode(true) as HTMLDivElement;
       item.onclick = () => {
-        visible = !visible;
-        if (visible) {
-          item.className = item.className.replaceAll('bold', '').trim();
-        } else {
-          item.className = item.className + ' bold';
-        }
-        store.set.toggleTrackVisibility(track.url);
+        store.set.toggleGroupVisibility(group.id);
       };
-      return item;
-    })
-    .forEach((item) => element.appendChild(item));
+      item.className = 'pointer-cursor';
+      item.querySelector('.title')!.innerHTML = group.name;
+      if (group.visible) {
+        item.querySelector('.title')!.className = 'bold';
+      }
+      const list = item.querySelector('.tracks-container') as HTMLDivElement;
+      group.tracks.forEach((track) => {
+        const trackItem = document.createElement('div');
+        trackItem.id = `track-item-${group.id}-${track.id}`;
+        trackItem.innerHTML = `<span>${track.name}</span>
+        <div class=\"d-flex text-disabled\"><span>${(
+          track.length / 1000
+        ).toFixed(0)} km</span></div>`;
+        list.appendChild(trackItem);
+      });
+      element.appendChild(item);
+    });
+  });
 }

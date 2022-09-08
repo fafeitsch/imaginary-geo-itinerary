@@ -7,8 +7,15 @@
     <title>Vite + TS</title>
   </head>
   <body class="w-100 h-100 d-flex">
-    <div id="tracks-container" class="p-3 d-flex flex-column gap-3"></div>
+    <div class="p-3 d-flex flex-column gap-3" id="tracks-container"></div>
     <div class="h-100 flex-grow-1" id="map"></div>
     <script src="/src/main.ts" type="module"></script>
   </body>
 </html>
+
+<template id="group-item-template">
+  <div class="group-item d-flex flex-column p-3 gap-3">
+    <span class="title"></span>
+    <div class="d-flex flex-column p-3 gap-2 tracks-container"></div>
+  </div>
+</template>

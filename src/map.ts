@@ -9,30 +9,32 @@ export function initMap(element: HTMLElement) {
   const url = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
   tileLayer(url).addTo(leafletMap);
   let trackLayers: any[] = [];
-  store.get.tracks$.subscribe((tracks) => {
+  store.get.groups$.subscribe((groups) => {
     trackLayers.forEach((layer) => leafletMap.removeLayer(layer));
-    trackLayers = tracks
-      .filter((track) => track.visible)
-      .map((track) =>
-        new LeafletGPX.GPX('itinerary/' + track.url, {
-          async: true,
-          polyline_options: { color: track.color },
-          marker_options: {
-            startIconUrl: '',
-            endIconUrl: '',
-            shadowIconUrl: '',
-          },
-        }).on('loaded', (gpx: LeafletGPX) => {
-          const distanceElement = document.querySelector(
-            `#track-item-${track.id} .distance`
-          )!;
-          console.log(distanceElement);
-          distanceElement.innerHTML = (
-            gpx.target.get_distance() / 1000
-          ).toFixed(0);
-        })
-      );
-    console.log(trackLayers);
+    trackLayers = groups
+      .filter((group) => group.visible)
+      .map((group) =>
+        group.tracks.map((track) =>
+          new LeafletGPX.GPX('itinerary/' + track.url, {
+            async: true,
+            polyline_options: { color: track.color },
+            marker_options: {
+              startIconUrl: '',
+              endIconUrl: '',
+              shadowIconUrl: '',
+            },
+          }).on('loaded', (gpx: LeafletGPX) => {
+            if (track.length === undefined) {
+              store.set.trackLength(
+                group.id,
+                track.id,
+                gpx.target.get_distance()
+              );
+            }
+          })
+        )
+      )
+      .reduce((acc, curr) => [...acc, ...curr], []);
     trackLayers.forEach((layer) => layer.addTo(leafletMap));
   });
 }
