@@ -34,9 +34,10 @@ const imageOutlet = document.querySelector(
 store.get.currentImage$.pipe(skip(1)).subscribe((image) => {
   if (!image) {
     showMap();
+    imageOutlet.src = 'itinerary/favicon.png';
     return;
   }
-  return (imageOutlet.src = 'itinerary/' + image.url);
+  imageOutlet.src = 'itinerary/' + image.url;
 });
 
 const body = document.getElementsByTagName('body')[0];

@@ -46,10 +46,7 @@ export default {
       distinct()
     ),
     images$: state$.pipe(map((state) => selectedImages(state.groups))),
-    currentImage$: state$.pipe(
-      map((state) => state.currentImage),
-      distinct()
-    ),
+    currentImage$: state$.pipe(map((state) => state.currentImage)),
     defaultCenter$: state$.pipe(
       map((state) => state.defaultCenter),
       distinct()
