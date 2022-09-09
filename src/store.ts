@@ -4,11 +4,17 @@ import { Group, Image, Itinerary } from './store.types';
 interface State {
   groups: Group[];
   currentImage: Image | undefined;
+  defaultCenter: {
+    lat: number;
+    lng: number;
+    zoom: number;
+  };
 }
 
 const state: State = {
   groups: [],
   currentImage: undefined,
+  defaultCenter: { lat: 0, lng: 0, zoom: 1 },
 };
 
 const state$ = new BehaviorSubject<State>(state);
@@ -40,13 +46,25 @@ export default {
       distinct()
     ),
     images$: state$.pipe(map((state) => selectedImages(state.groups))),
-    currentImage$: state$.pipe(map((state) => state.currentImage)),
+    currentImage$: state$.pipe(
+      map((state) => state.currentImage),
+      distinct()
+    ),
+    defaultCenter$: state$.pipe(
+      map((state) => state.defaultCenter),
+      distinct()
+    ),
   },
   set: {
     itinerary(itinerary: Itinerary) {
       const images = selectedImages(itinerary.groups);
       const currentImage = images.length > 0 ? images[0] : undefined;
-      state$.next({ ...state$.value, groups: itinerary.groups, currentImage });
+      state$.next({
+        ...state$.value,
+        groups: itinerary.groups,
+        currentImage,
+        defaultCenter: itinerary.map,
+      });
     },
     trackLength(groupId: string, index: number, length: number) {
       const group = state$.value.groups.find((group) => group.id === groupId);

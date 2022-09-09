@@ -65,11 +65,10 @@ export function initMap(element: HTMLElement) {
       imageMarkers.forEach((layer) => leafletMap.removeLayer(layer));
       imageMarkers = images.map((image) => {
         const color = currentImage?.url === image.url ? '#FF0000' : '#b2b2b2';
-        const markerHtmlStyles = `\n background-color: ${color}; width: 25px; height: 25px; display: block; left: -12px; top: -12px; position: relative; border-radius: 25px 25px 0; transform: rotate(45deg);`;
+        const markerHtmlStyles = `\n background-color: ${color}; width: 14px; height: 14px; display: block; left: -7px; top: -7px; position: relative; border-radius: 7px 7px 0; transform: rotate(45deg);`;
         const icon = divIcon({
           className: 'my-custom-pin',
-          iconAnchor: [0, 24],
-          popupAnchor: [0, -36],
+          iconAnchor: [4, 9],
           html: `<span style="${markerHtmlStyles}" />`,
         });
         const m = marker(image.location, { icon }).on('click', () =>
@@ -82,6 +81,9 @@ export function initMap(element: HTMLElement) {
       imageMarkers.forEach((marker) => marker.addTo(leafletMap));
     }
   );
+  store.get.defaultCenter$.pipe(take(2)).subscribe((center) => {
+    leafletMap.setView(center, center.zoom, { animate: false });
+  });
 }
 
 export function updateMapSize() {

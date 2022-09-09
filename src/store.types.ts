@@ -2,6 +2,11 @@ export interface Itinerary {
   groups: Group[];
   name: string;
   types: { [key: string]: { color: string; symbol: string } };
+  map: {
+    lat: number;
+    lng: number;
+    zoom: number;
+  };
 }
 
 export interface Track {
