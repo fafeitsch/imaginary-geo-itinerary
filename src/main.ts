@@ -13,10 +13,12 @@ fetch('itinerary/index.json')
   });
 
 initMap(document.getElementById('map')!);
-initTrackList(document.getElementById('tracks-container')!);
 
+const itineraryContainer = document.getElementById('tracks-container')!;
 const imageContainer = document.getElementById('image-container')!;
 const mapContainer = document.getElementById('map')!;
+
+initTrackList(itineraryContainer);
 
 const imageOutlet = document.querySelector(
   '#image-container > img'
@@ -38,11 +40,7 @@ body.addEventListener('keyup', (event) => {
       break;
     }
     case 'i': {
-      imageContainer.classList.add('d-flex');
-      imageContainer.classList.remove('d-none');
-      imageContainer.style.maxHeight = '100vh';
-      mapContainer.classList.add('d-none');
-      mapContainer.classList.remove('d-block');
+      showImage();
       break;
     }
     case 'b': {
@@ -66,6 +64,8 @@ function showMap() {
   imageContainer.classList.remove('d-flex');
   mapContainer.classList.add('d-block');
   mapContainer.classList.remove('d-none');
+  itineraryContainer.classList.add('d-flex');
+  itineraryContainer.classList.remove('d-none');
   updateMapSize();
 }
 
@@ -75,5 +75,17 @@ function showAll() {
   imageContainer.style.maxHeight = '64vh';
   mapContainer.classList.add('d-block');
   mapContainer.classList.remove('d-none');
+  itineraryContainer.classList.add('d-flex');
+  itineraryContainer.classList.remove('d-none');
   updateMapSize();
+}
+
+function showImage() {
+  imageContainer.classList.add('d-flex');
+  imageContainer.classList.remove('d-none');
+  imageContainer.style.maxHeight = '100vh';
+  mapContainer.classList.add('d-none');
+  mapContainer.classList.remove('d-block');
+  itineraryContainer.classList.add('d-none');
+  itineraryContainer.classList.remove('d-flex');
 }
