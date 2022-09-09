@@ -9,10 +9,13 @@ body {
   background-color: black;
 }
 
-#tracks-container {
+#itinerary {
   background-color: #212121
 }
 
-.map-marker-pin {
-
+.indicator {
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  border-radius: 15px;
 }

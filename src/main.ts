@@ -4,17 +4,25 @@ import { initMap, updateMapSize } from './map';
 import store from './store';
 import { initTrackList } from './tracklist';
 import { skip } from 'rxjs';
+import { Itinerary } from './store.types';
 
 fetch('itinerary/index.json')
   .then((response) => response.json())
-  .then((itinerary) => {
+  .then((itinerary: Itinerary) => {
     document.querySelector('title')!.innerHTML = itinerary.name;
+    itinerary.groups.forEach((group) =>
+      group.tracks.forEach((track) => {
+        const type = itinerary.types[track.type];
+        track.color = type?.color || '#000000';
+        track.symbol = type?.symbol || '';
+      })
+    );
     store.set.itinerary(itinerary);
   });
 
 initMap(document.getElementById('map')!);
 
-const itineraryContainer = document.getElementById('tracks-container')!;
+const itineraryContainer = document.getElementById('itinerary')!;
 const imageContainer = document.getElementById('image-container')!;
 const mapContainer = document.getElementById('map')!;
 

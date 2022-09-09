@@ -1,14 +1,17 @@
 export interface Itinerary {
   groups: Group[];
   name: string;
+  types: { [key: string]: { color: string; symbol: string } };
 }
 
 export interface Track {
   name: string;
   url: string;
-  color: string;
   id: string;
   length: number;
+  color: string;
+  symbol: string;
+  type: string;
 }
 
 export interface Group {
