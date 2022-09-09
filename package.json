@@ -17,10 +17,8 @@
     "vite": "^3.1.0"
   },
   "dependencies": {
-    "@mapbox/polyline": "^1.1.1",
     "leaflet": "^1.8.0",
     "leaflet-gpx": "^1.7.0",
-    "polyline": "^0.2.0",
     "rxjs": "^7.5.6"
   }
 }

@@ -1,14 +1,24 @@
-import { latLng, map as LFMap, Map, tileLayer } from 'leaflet';
+import {
+  divIcon,
+  latLng,
+  Layer,
+  map as LFMap,
+  Map,
+  Marker,
+  marker,
+  tileLayer,
+} from 'leaflet';
 // @ts-ignore
 import * as LeafletGPX from 'leaflet-gpx/gpx';
 import store from './store';
 import 'leaflet/dist/images/marker-icon.png';
+import { combineLatest } from 'rxjs';
 
 export function initMap(element: HTMLElement) {
   let leafletMap: Map = LFMap(element).setView(latLng(50, 9), 10);
   const url = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
   tileLayer(url).addTo(leafletMap);
-  let trackLayers: any[] = [];
+  let trackLayers: Layer[] = [];
   leafletMap.on('click', (event) => {
     console.log([event.latlng.lat, event.latlng.lng]);
   });
@@ -40,4 +50,27 @@ export function initMap(element: HTMLElement) {
       .reduce((acc, curr) => [...acc, ...curr], []);
     trackLayers.forEach((layer) => layer.addTo(leafletMap));
   });
+  let imageMarkers: Marker[] = [];
+  combineLatest([store.get.currentImage$, store.get.images$]).subscribe(
+    ([currentImage, images]) => {
+      imageMarkers.forEach((layer) => leafletMap.removeLayer(layer));
+      imageMarkers = images.map((image) => {
+        const color = currentImage?.url === image.url ? '#FF0000' : '#b2b2b2';
+        const markerHtmlStyles = `\n background-color: ${color}; width: 25px; height: 25px; display: block; left: -12px; top: -12px; position: relative; border-radius: 25px 25px 0; transform: rotate(45deg);`;
+        const icon = divIcon({
+          className: 'my-custom-pin',
+          iconAnchor: [0, 24],
+          popupAnchor: [0, -36],
+          html: `<span style="${markerHtmlStyles}" />`,
+        });
+        const m = marker(image.location, { icon }).on('click', () =>
+          store.set.currentImage(image)
+        );
+        if (currentImage?.url === image.url) {
+        }
+        return m;
+      });
+      imageMarkers.forEach((marker) => marker.addTo(leafletMap));
+    }
+  );
 }

@@ -37,6 +37,7 @@ export default {
       map((state) => state.groups),
       distinct()
     ),
+    images$: state$.pipe(map((state) => selectedImages(state.groups))),
     currentImage$: state$.pipe(map((state) => state.currentImage)),
   },
   set: {
@@ -67,6 +68,9 @@ export default {
           group.id === groupId ? newGroup : group
         ),
       });
+    },
+    currentImage(currentImage: Image) {
+      state$.next({ ...state$.value, currentImage });
     },
     nextImage() {
       const images = selectedImages(state$.value.groups);
