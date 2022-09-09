@@ -71,12 +71,9 @@ export function initMap(element: HTMLElement) {
           iconAnchor: [4, 9],
           html: `<span style="${markerHtmlStyles}" />`,
         });
-        const m = marker(image.location, { icon }).on('click', () =>
+        return marker(image.location, { icon }).on('click', () =>
           store.set.currentImage(image)
         );
-        if (currentImage?.url === image.url) {
-        }
-        return m;
       });
       imageMarkers.forEach((marker) => marker.addTo(leafletMap));
     }
