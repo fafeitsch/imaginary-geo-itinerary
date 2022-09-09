@@ -79,6 +79,17 @@ export default {
       }
       state$.next({ ...state$.value, currentImage });
     },
+    previousImage() {
+      const images = selectedImages(state$.value.groups);
+      const index = images.findIndex(
+        (image) => image.url === state$.value.currentImage?.url
+      );
+      let currentImage = undefined;
+      if (index >= 0) {
+        currentImage = images[(index + images.length + 1) % images.length];
+      }
+      state$.next({ ...state$.value, currentImage });
+    },
     toggleGroupVisibility(id: string) {
       let groups = state$.value.groups.map((group) =>
         group.id === id

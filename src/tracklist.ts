@@ -21,7 +21,6 @@ export function initTrackList(element: HTMLElement) {
       const list = item.querySelector('.tracks-container') as HTMLDivElement;
       group.tracks.forEach((track) => {
         const trackItem = document.createElement('div');
-        trackItem.id = `track-item-${group.id}-${track.id}`;
         trackItem.innerHTML = `<span>${track.name}</span>
         <div class=\"d-flex text-disabled\"><span>${(
           track.length / 1000

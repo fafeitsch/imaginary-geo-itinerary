@@ -6,4 +6,6 @@ export function initImageOutlet(element: HTMLImageElement) {
   );
   document.getElementById('next-image-button')!.onclick = () =>
     store.set.nextImage();
+  document.getElementById('previous-image-button')!.onclick = () =>
+    store.set.previousImage();
 }
