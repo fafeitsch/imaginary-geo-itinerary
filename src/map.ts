@@ -12,10 +12,12 @@ import {
 import * as LeafletGPX from 'leaflet-gpx/gpx';
 import store from './store';
 import 'leaflet/dist/images/marker-icon.png';
-import { combineLatest } from 'rxjs';
+import { combineLatest, take } from 'rxjs';
+
+let leafletMap: Map;
 
 export function initMap(element: HTMLElement) {
-  let leafletMap: Map = LFMap(element).setView(latLng(50, 9), 10);
+  leafletMap = LFMap(element).setView(latLng(50, 9), 10);
   const url = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
   tileLayer(url).addTo(leafletMap);
   let trackLayers: Layer[] = [];
@@ -50,10 +52,16 @@ export function initMap(element: HTMLElement) {
   let imageMarkers: Marker[] = [];
   combineLatest([store.get.currentImage$, store.get.images$]).subscribe(
     ([currentImage, images]) => {
-      leafletMap.setView({
-        lat: currentImage?.location[0] || 0,
-        lng: currentImage?.location[1] || 0,
-      });
+      if (currentImage) {
+        leafletMap.setView(
+          {
+            lat: currentImage?.location[0],
+            lng: currentImage?.location[1],
+          },
+          undefined,
+          { animate: false }
+        );
+      }
       imageMarkers.forEach((layer) => leafletMap.removeLayer(layer));
       imageMarkers = images.map((image) => {
         const color = currentImage?.url === image.url ? '#FF0000' : '#b2b2b2';
@@ -74,4 +82,17 @@ export function initMap(element: HTMLElement) {
       imageMarkers.forEach((marker) => marker.addTo(leafletMap));
     }
   );
+}
+
+export function updateMapSize() {
+  leafletMap.invalidateSize(false);
+  store.get.currentImage$.pipe(take(1)).subscribe((image) => {
+    if (image) {
+      leafletMap.setView(
+        { lat: image.location[0], lng: image.location[1] },
+        undefined,
+        { animate: false }
+      );
+    }
+  });
 }

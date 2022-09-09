@@ -1,9 +1,9 @@
 import './style.scss';
 import 'leaflet/dist/leaflet.css';
-import { initMap } from './map';
+import { initMap, updateMapSize } from './map';
 import store from './store';
 import { initTrackList } from './tracklist';
-import { initImageOutlet } from './image';
+import { skip } from 'rxjs';
 
 fetch('itinerary/index.json')
   .then((response) => response.json())
@@ -14,19 +14,27 @@ fetch('itinerary/index.json')
 
 initMap(document.getElementById('map')!);
 initTrackList(document.getElementById('tracks-container')!);
-initImageOutlet(document.getElementById('image-outlet')! as HTMLImageElement);
 
 const imageContainer = document.getElementById('image-container')!;
 const mapContainer = document.getElementById('map')!;
 
+const imageOutlet = document.querySelector(
+  '#image-container > img'
+)! as HTMLImageElement;
+store.get.currentImage$.pipe(skip(1)).subscribe((image) => {
+  if (!image) {
+    showMap();
+    return;
+  }
+  return (imageOutlet.src = 'itinerary/' + image.url);
+});
+
 const body = document.getElementsByTagName('body')[0];
+
 body.addEventListener('keyup', (event) => {
   switch (event.key) {
     case 'm': {
-      imageContainer.classList.add('d-none');
-      imageContainer.classList.remove('d-flex');
-      mapContainer.classList.add('d-block');
-      mapContainer.classList.remove('d-none');
+      showMap();
       break;
     }
     case 'i': {
@@ -38,11 +46,7 @@ body.addEventListener('keyup', (event) => {
       break;
     }
     case 'b': {
-      imageContainer.classList.add('d-flex');
-      imageContainer.classList.remove('d-none');
-      imageContainer.style.maxHeight = '64vh';
-      mapContainer.classList.add('d-block');
-      mapContainer.classList.remove('d-none');
+      showAll();
       break;
     }
     case 'ArrowRight':
@@ -56,3 +60,20 @@ body.addEventListener('keyup', (event) => {
     }
   }
 });
+
+function showMap() {
+  imageContainer.classList.add('d-none');
+  imageContainer.classList.remove('d-flex');
+  mapContainer.classList.add('d-block');
+  mapContainer.classList.remove('d-none');
+  updateMapSize();
+}
+
+function showAll() {
+  imageContainer.classList.add('d-flex');
+  imageContainer.classList.remove('d-none');
+  imageContainer.style.maxHeight = '64vh';
+  mapContainer.classList.add('d-block');
+  mapContainer.classList.remove('d-none');
+  updateMapSize();
+}

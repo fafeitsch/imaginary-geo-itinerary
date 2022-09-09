@@ -1,11 +1,4 @@
-import {
-  BehaviorSubject,
-  distinct,
-  map,
-  Observable,
-  Subject,
-  takeUntil,
-} from 'rxjs';
+import { BehaviorSubject, distinct, map } from 'rxjs';
 import { Group, Image, Itinerary } from './store.types';
 
 interface State {
@@ -19,7 +12,6 @@ const state: State = {
 };
 
 const state$ = new BehaviorSubject<State>(state);
-const destroy$ = new Subject<void>();
 
 function selectedImages(groups: Group[]): Image[] {
   return groups
@@ -28,10 +20,20 @@ function selectedImages(groups: Group[]): Image[] {
     .reduce((acc, curr) => [...acc, ...curr], []);
 }
 
+function selectImage(increment: number) {
+  const images = selectedImages(state$.value.groups);
+  const index = images.findIndex(
+    (image) => image.url === state$.value.currentImage?.url
+  );
+  let currentImage = undefined;
+  increment = increment < 0 ? images.length + Math.abs(increment) : increment;
+  if (index >= 0) {
+    currentImage = images[(index + increment) % images.length];
+  }
+  state$.next({ ...state$.value, currentImage });
+}
+
 export default {
-  effect(observable$: Observable<any>) {
-    observable$.pipe(takeUntil(destroy$)).subscribe();
-  },
   get: {
     groups$: state$.pipe(
       map((state) => state.groups),
@@ -51,13 +53,11 @@ export default {
       if (!group) {
         return;
       }
-      const newTrack = group.tracks[index];
-      newTrack.length = length;
+      const tracks = [...group.tracks];
+      tracks[index].length = length;
       const newGroup = {
         ...group,
-        tracks: group.tracks.map((track, i) =>
-          i === index ? { ...newTrack } : track
-        ),
+        tracks,
       };
       state$.next({
         ...state$.value,
@@ -70,26 +70,10 @@ export default {
       state$.next({ ...state$.value, currentImage });
     },
     nextImage() {
-      const images = selectedImages(state$.value.groups);
-      const index = images.findIndex(
-        (image) => image.url === state$.value.currentImage?.url
-      );
-      let currentImage = undefined;
-      if (index >= 0) {
-        currentImage = images[(index + 1) % images.length];
-      }
-      state$.next({ ...state$.value, currentImage });
+      selectImage(1);
     },
     previousImage() {
-      const images = selectedImages(state$.value.groups);
-      const index = images.findIndex(
-        (image) => image.url === state$.value.currentImage?.url
-      );
-      let currentImage = undefined;
-      if (index >= 0) {
-        currentImage = images[(index + images.length + 1) % images.length];
-      }
-      state$.next({ ...state$.value, currentImage });
+      selectImage(-1);
     },
     toggleGroupVisibility(id: string) {
       let groups = state$.value.groups.map((group) =>
