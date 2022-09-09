@@ -46,20 +46,17 @@ export default {
       const currentImage = images.length > 0 ? images[0] : undefined;
       state$.next({ ...state$.value, groups: itinerary.groups, currentImage });
     },
-    trackLength(groupId: string, trackId: string, length: number) {
+    trackLength(groupId: string, index: number, length: number) {
       const group = state$.value.groups.find((group) => group.id === groupId);
       if (!group) {
         return;
       }
-      const newTrack = group.tracks.find((track) => track.id === trackId);
-      if (!newTrack) {
-        return;
-      }
+      const newTrack = group.tracks[index];
       newTrack.length = length;
       const newGroup = {
         ...group,
-        tracks: group.tracks.map((track) =>
-          track.id === trackId ? { ...newTrack } : track
+        tracks: group.tracks.map((track, i) =>
+          i === index ? { ...newTrack } : track
         ),
       };
       state$.next({

@@ -27,22 +27,19 @@ export function initMap(element: HTMLElement) {
     trackLayers = groups
       .filter((group) => group.visible)
       .map((group) =>
-        group.tracks.map((track) =>
+        group.tracks.map((track, index) =>
           new LeafletGPX.GPX('itinerary/' + track.url, {
             async: true,
             polyline_options: { color: track.color },
             marker_options: {
+              lapIconUrl: '',
               startIconUrl: '',
               endIconUrl: '',
               shadowIconUrl: '',
             },
           }).on('loaded', (gpx: LeafletGPX) => {
             if (track.length === undefined) {
-              store.set.trackLength(
-                group.id,
-                track.id,
-                gpx.target.get_distance()
-              );
+              store.set.trackLength(group.id, index, gpx.target.get_distance());
             }
           })
         )
@@ -53,6 +50,10 @@ export function initMap(element: HTMLElement) {
   let imageMarkers: Marker[] = [];
   combineLatest([store.get.currentImage$, store.get.images$]).subscribe(
     ([currentImage, images]) => {
+      leafletMap.setView({
+        lat: currentImage?.location[0] || 0,
+        lng: currentImage?.location[1] || 0,
+      });
       imageMarkers.forEach((layer) => leafletMap.removeLayer(layer));
       imageMarkers = images.map((image) => {
         const color = currentImage?.url === image.url ? '#FF0000' : '#b2b2b2';

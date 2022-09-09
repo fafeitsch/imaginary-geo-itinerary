@@ -1,5 +1,6 @@
 export interface Itinerary {
   groups: Group[];
+  name: string;
 }
 
 export interface Track {
