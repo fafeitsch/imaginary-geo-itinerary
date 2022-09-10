@@ -36,7 +36,8 @@ function selectImage(increment: number) {
     (image) => image.url === state$.value.currentImage?.url
   );
   let currentImage = undefined;
-  increment = increment < 0 ? images.length + Math.abs(increment) : increment;
+  increment =
+    increment < 0 ? images.length + Math.abs(increment) - 2 : increment;
   if (index >= 0) {
     currentImage = images[(index + increment) % images.length];
   }

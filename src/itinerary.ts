@@ -1,4 +1,5 @@
 import store from './store';
+import { updateMapSize } from './map';
 
 let itineraryContainer: HTMLDivElement;
 
@@ -42,6 +43,7 @@ export function initItinerary() {
       });
       itineraryContainer.appendChild(item);
     });
+    updateMapSize();
   });
 }
 

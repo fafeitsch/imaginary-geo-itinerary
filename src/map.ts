@@ -98,7 +98,7 @@ export function hideMap() {
   updateMapSize();
 }
 
-function updateMapSize() {
+export function updateMapSize() {
   leafletMap.invalidateSize(false);
   store.get.currentImage$.pipe(take(1)).subscribe((image) => {
     if (image) {

@@ -1,5 +1,4 @@
 import store from './store';
-import { skip } from 'rxjs';
 
 let imageOutlet: HTMLImageElement;
 let imageContainer: HTMLDivElement;
@@ -9,7 +8,7 @@ export function initImage() {
     'image-container'
   )! as HTMLDivElement;
   imageOutlet = imageContainer.querySelector('img')! as HTMLImageElement;
-  store.get.currentImage$.pipe(skip(1)).subscribe((image) => {
+  store.get.currentImage$.subscribe((image) => {
     if (!image) {
       imageOutlet.src = 'itinerary/favicon.png';
       return;
