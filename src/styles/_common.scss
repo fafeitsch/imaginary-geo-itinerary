@@ -18,22 +18,8 @@
   display: none;
 }
 
-a {
-  cursor: pointer;
-  color: inherit;
-  text-decoration: inherit;
-}
-
-.grab-cursor {
-  cursor: grab;
-}
-
 .pointer-cursor {
   cursor: pointer;
-}
-
-.disabled {
-  opacity: 0.5;
 }
 
 .text-disabled {
@@ -44,20 +30,10 @@ a {
   font-weight: bold;
 }
 
-.no-wrap {
-  white-space: nowrap;
-}
-
 .overflow-hidden {
   overflow: hidden;
 }
 
 .overflow-auto {
   overflow: auto;
-}
-
-.text-ellipses {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
 }

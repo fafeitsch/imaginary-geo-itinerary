@@ -1,6 +1,9 @@
 import store from './store';
 
-export function initTrackList(element: HTMLElement) {
+let itineraryContainer: HTMLDivElement;
+
+export function initItinerary() {
+  itineraryContainer = document.getElementById('itinerary') as HTMLDivElement;
   const template = document.getElementById(
     'group-item-template'
   )! as HTMLTemplateElement;
@@ -8,7 +11,7 @@ export function initTrackList(element: HTMLElement) {
     'track-item-template'
   )! as HTMLTemplateElement;
   store.get.groups$.subscribe((groups) => {
-    element.innerHTML = '';
+    itineraryContainer.innerHTML = '';
     groups.forEach((group) => {
       const item = template.content
         .querySelector('div')!
@@ -37,7 +40,17 @@ export function initTrackList(element: HTMLElement) {
         trackItem.querySelector('.info')!.innerHTML = track.info || '';
         list.appendChild(trackItem);
       });
-      element.appendChild(item);
+      itineraryContainer.appendChild(item);
     });
   });
+}
+
+export function showItinerary() {
+  itineraryContainer.classList.add('d-flex');
+  itineraryContainer.classList.remove('d-none');
+}
+
+export function hideItinerary() {
+  itineraryContainer.classList.add('d-none');
+  itineraryContainer.classList.remove('d-flex');
 }

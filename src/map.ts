@@ -15,9 +15,11 @@ import 'leaflet/dist/images/marker-icon.png';
 import { combineLatest, take } from 'rxjs';
 
 let leafletMap: Map;
+let mapElement: HTMLDivElement;
 
-export function initMap(element: HTMLElement) {
-  leafletMap = LFMap(element).setView(latLng(50, 9), 10);
+export function initMap() {
+  mapElement = document.getElementById('map') as HTMLDivElement;
+  leafletMap = LFMap(mapElement).setView(latLng(50, 9), 10);
   const url = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
   tileLayer(url).addTo(leafletMap);
   let trackLayers: Layer[] = [];
@@ -84,7 +86,19 @@ export function initMap(element: HTMLElement) {
   });
 }
 
-export function updateMapSize() {
+export function showMap() {
+  mapElement.classList.add('d-block');
+  mapElement.classList.remove('d-none');
+  updateMapSize();
+}
+
+export function hideMap() {
+  mapElement.classList.remove('d-block');
+  mapElement.classList.add('d-none');
+  updateMapSize();
+}
+
+function updateMapSize() {
   leafletMap.invalidateSize(false);
   store.get.currentImage$.pipe(take(1)).subscribe((image) => {
     if (image) {

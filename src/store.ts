@@ -2,6 +2,7 @@ import { BehaviorSubject, distinctUntilChanged, map } from 'rxjs';
 import { Group, Image, Itinerary } from './store.types';
 
 interface State {
+  name: string;
   groups: Group[];
   currentImage: Image | undefined;
   defaultCenter: {
@@ -9,12 +10,15 @@ interface State {
     lng: number;
     zoom: number;
   };
+  info: { label: string; link: string };
 }
 
 const state: State = {
+  name: 'IGI',
   groups: [],
   currentImage: undefined,
   defaultCenter: { lat: 0, lng: 0, zoom: 1 },
+  info: { label: '', link: '' },
 };
 
 const state$ = new BehaviorSubject<State>(state);
@@ -41,6 +45,14 @@ function selectImage(increment: number) {
 
 export default {
   get: {
+    name$: state$.pipe(
+      map((state) => state.name),
+      distinctUntilChanged()
+    ),
+    info$: state$.pipe(
+      map((state) => state.info),
+      distinctUntilChanged()
+    ),
     groups$: state$.pipe(
       map((state) => state.groups),
       distinctUntilChanged()
@@ -67,6 +79,8 @@ export default {
         groups: itinerary.groups,
         currentImage,
         defaultCenter: itinerary.map,
+        name: itinerary.name,
+        info: itinerary.info || { link: '', label: '' },
       });
     },
     trackLength(groupId: string, index: number, length: number) {
