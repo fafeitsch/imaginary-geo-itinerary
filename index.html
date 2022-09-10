@@ -14,7 +14,14 @@
       <span>Press <em>m</em> to show the map only.</span>
       <span>Press <em>ESC</em> to show all.</span>
       <span id="imprint" class="mt-3 bold"></span>
-      <span class="mt-3 bold">Made with IGI: <a href="https://github.com/fafeitsch/imaginary-geo-itinerary" target="_blank">Github</a></span>
+      <span class="mt-3 bold"
+        >Made with IGI:
+        <a
+          href="https://github.com/fafeitsch/imaginary-geo-itinerary"
+          target="_blank"
+          >Github</a
+        ></span
+      >
     </div>
     <div
       class="p-3 d-flex flex-column gap-3 flex-shrink-0 overflow-auto"
@@ -46,9 +53,12 @@
     <div
       class="indicator d-flex align-items-center justify-content-center"
     ></div>
-    <div class="d-flex flex-column gap-2">
+    <div class="d-flex flex-column gap-2 w-100">
       <span class="name"></span>
-      <span class="distance text-disabled"></span>
+      <div class="d-flex gap-3">
+        <span class="distance text-disabled"></span>
+        <span class="info text-disabled"></span>
+      </div>
     </div>
   </div>
 </template>

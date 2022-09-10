@@ -21,6 +21,7 @@ export interface Track {
   color: string;
   symbol: string;
   type: string;
+  info?: string;
 }
 
 export interface Group {

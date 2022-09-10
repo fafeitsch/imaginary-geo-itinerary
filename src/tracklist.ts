@@ -34,6 +34,7 @@ export function initTrackList(element: HTMLElement) {
         trackItem.querySelector('.name')!.innerHTML = track.name;
         const distance = !track.length ? '–' : (track.length / 1000).toFixed(0);
         trackItem.querySelector('.distance')!.innerHTML = `${distance} km`;
+        trackItem.querySelector('.info')!.innerHTML = track.info || '';
         list.appendChild(trackItem);
       });
       element.appendChild(item);
