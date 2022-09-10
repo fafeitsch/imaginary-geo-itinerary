@@ -1,0 +1,130 @@
+{
+  "name": "My Hiking Tour",
+  "map": {
+    "lat": 49.88925732897995,
+    "lng": 9.832763671875002,
+    "zoom": 9
+  },
+  "info": {
+    "label": "About",
+    "link": "https://example.com"
+  },
+  "types": {
+    "train": {
+      "color": "#920000",
+      "symbol": "\uD83D\uDE84"
+    },
+    "feet": {
+      "color": "#db6d00",
+      "symbol": "\uD83D\uDC3E"
+    },
+    "bus": {
+      "color": "#490092",
+      "symbol": "\uD83D\uDE8C"
+    },
+    "taxi": {
+      "color": "#004949",
+      "symbol": "\uD83D\uDE95"
+    }
+  },
+  "groups": [
+    {
+      "name": "Day 1 – Travel to starting point",
+      "id": "day1",
+      "selected": true,
+      "images": [],
+      "tracks": [
+        {
+          "type": "bus",
+          "url": "tracks/bus.gpx",
+          "name": "Höchberg → Würzburg"
+        },
+        {
+          "type": "train",
+          "url": "tracks/train.gpx",
+          "name": "Würzburg → Gemünden"
+        },
+        {
+          "type": "feet",
+          "url": "tracks/hotel.gpx",
+          "name": "Walk to hotel"
+        }
+      ]
+    },
+    {
+      "name": "Day 2",
+      "id": "day2",
+      "selected": true,
+      "images": [
+        {
+          "url": "forest.jpg",
+          "location": [50.053143474989454, 9.727020263671877]
+        },
+        {
+          "url": "path.jpg",
+          "location": [49.991284125840664, 9.76238250732422]
+        }
+      ],
+      "tracks": [
+        {
+          "type": "taxi",
+          "url": "tracks/taxi1.gpx",
+          "name": "Taxi to starting point"
+        },
+        {
+          "type": "feet",
+          "url": "tracks/day1.gpx",
+          "name": "Walking to Karlstadt",
+          "info": "↑ 417m ↓ 455m"
+        }
+      ]
+    },
+    {
+      "name": "Day 3",
+      "id": "day3",
+      "selected": false,
+      "images": [
+        {
+          "url": "herbs.jpg",
+          "location": [49.94421249094379, 9.785825014114382]
+        },
+        {
+          "url": "way.jpg",
+          "location": [49.93282585249191, 9.804697036743166]
+        }
+      ],
+      "tracks": [
+        {
+          "type": "feet",
+          "url": "tracks/day2.gpx",
+          "name": "Walking to Zellingen",
+          "info": "↑ 95m ↓ 88m"
+        }
+      ]
+    },
+    {
+      "name": "Day 4",
+      "id": "day4",
+      "selected": false,
+      "images": [
+        {
+          "url": "fields.jpg",
+          "location": [49.83154681935647, 9.848706722259523]
+        }
+      ],
+      "tracks": [
+        {
+          "type": "feet",
+          "url": "tracks/day3.gpx",
+          "name": "Walking to Zell",
+          "info": "↑ 318m ↓ 314m"
+        },
+        {
+          "type": "taxi",
+          "url": "tracks/taxi.gpx",
+          "name": "Taxi to home"
+        }
+      ]
+    }
+  ]
+}
