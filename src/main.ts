@@ -18,15 +18,27 @@ fetch('itinerary/index.json')
       })
     );
     store.set.itinerary(itinerary);
+    console.log(itinerary);
+    if (itinerary.info) {
+      document.getElementById(
+        'imprint'
+      )!.innerHTML = `<a href=\"${itinerary.info.link}\" target=\"_blank\">${itinerary.info.label}</a>`;
+    }
   });
 
 initMap(document.getElementById('map')!);
 
 const itineraryContainer = document.getElementById('itinerary')!;
+initTrackList(itineraryContainer);
+
 const imageContainer = document.getElementById('image-container')!;
 const mapContainer = document.getElementById('map')!;
-
-initTrackList(itineraryContainer);
+const infoOpener = document.getElementById('info-opener')!;
+const appInfo = document.getElementById('app-info')!;
+infoOpener.addEventListener('click', () => {
+  appInfo.classList.toggle('d-none');
+  appInfo.classList.toggle('d-flex');
+});
 
 const imageOutlet = document.querySelector(
   '#image-container > img'
@@ -38,6 +50,9 @@ store.get.currentImage$.pipe(skip(1)).subscribe((image) => {
     return;
   }
   imageOutlet.src = 'itinerary/' + image.url;
+});
+imageOutlet.addEventListener('click', () => {
+  store.set.nextImage();
 });
 
 const body = document.getElementsByTagName('body')[0];
@@ -52,7 +67,7 @@ body.addEventListener('keyup', (event) => {
       showImage();
       break;
     }
-    case 'b': {
+    case 'Escape': {
       showAll();
       break;
     }
@@ -65,6 +80,11 @@ body.addEventListener('keyup', (event) => {
       store.set.previousImage();
       break;
     }
+    case 'F1': {
+      appInfo.classList.toggle('d-none');
+      appInfo.classList.toggle('d-flex');
+      break;
+    }
   }
 });
 
@@ -75,6 +95,7 @@ function showMap() {
   mapContainer.classList.remove('d-none');
   itineraryContainer.classList.add('d-flex');
   itineraryContainer.classList.remove('d-none');
+  infoOpener.style.color = 'black';
   updateMapSize();
 }
 
@@ -86,6 +107,7 @@ function showAll() {
   mapContainer.classList.remove('d-none');
   itineraryContainer.classList.add('d-flex');
   itineraryContainer.classList.remove('d-none');
+  infoOpener.style.color = 'inherit';
   updateMapSize();
 }
 
@@ -97,4 +119,5 @@ function showImage() {
   mapContainer.classList.remove('d-block');
   itineraryContainer.classList.add('d-none');
   itineraryContainer.classList.remove('d-flex');
+  infoOpener.style.color = 'inherit';
 }

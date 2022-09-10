@@ -7,6 +7,10 @@ export interface Itinerary {
     lng: number;
     zoom: number;
   };
+  info: {
+    label: string;
+    link: string;
+  };
 }
 
 export interface Track {

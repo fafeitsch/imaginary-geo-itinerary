@@ -19,3 +19,42 @@ body {
   background-color: white;
   border-radius: 15px;
 }
+
+#info-opener {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  border: 0;
+  padding: 0;
+  font-size: 2em;
+  background-color: transparent;
+  color: inherit;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+#app-info {
+  position: absolute;
+  right: 5px;
+  top: 45px;
+  background-color: #212121;
+  color: inherit;
+  opacity: 0.5;
+  z-index: 1000;
+}
+
+em {
+  font-style: italic;
+}
+
+a {
+  color: #3799bb
+}
+
+a:hover {
+  color: #0078a8;
+}
+
+a:visited {
+  color: #0f82af;
+}

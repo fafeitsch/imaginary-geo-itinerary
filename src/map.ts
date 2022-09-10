@@ -48,6 +48,7 @@ export function initMap(element: HTMLElement) {
       )
       .reduce((acc, curr) => [...acc, ...curr], []);
     trackLayers.forEach((layer) => layer.addTo(leafletMap));
+    updateMapSize();
   });
   let imageMarkers: Marker[] = [];
   combineLatest([store.get.currentImage$, store.get.images$]).subscribe(

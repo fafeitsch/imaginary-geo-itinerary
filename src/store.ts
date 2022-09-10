@@ -1,4 +1,4 @@
-import { BehaviorSubject, distinct, map } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, map } from 'rxjs';
 import { Group, Image, Itinerary } from './store.types';
 
 interface State {
@@ -43,13 +43,19 @@ export default {
   get: {
     groups$: state$.pipe(
       map((state) => state.groups),
-      distinct()
+      distinctUntilChanged()
     ),
-    images$: state$.pipe(map((state) => selectedImages(state.groups))),
-    currentImage$: state$.pipe(map((state) => state.currentImage)),
+    images$: state$.pipe(
+      map((state) => selectedImages(state.groups)),
+      distinctUntilChanged()
+    ),
+    currentImage$: state$.pipe(
+      map((state) => state.currentImage),
+      distinctUntilChanged()
+    ),
     defaultCenter$: state$.pipe(
       map((state) => state.defaultCenter),
-      distinct()
+      distinctUntilChanged()
     ),
   },
   set: {
