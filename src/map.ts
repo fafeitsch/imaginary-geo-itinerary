@@ -29,7 +29,7 @@ export function initMap() {
   store.get.groups$.subscribe((groups) => {
     trackLayers.forEach((layer) => leafletMap.removeLayer(layer));
     trackLayers = groups
-      .filter((group) => group.visible)
+      .filter((group) => group.selected)
       .map((group) =>
         group.tracks.map((track, index) =>
           new LeafletGPX.GPX('itinerary/' + track.url, {
@@ -67,11 +67,14 @@ export function initMap() {
       }
       imageMarkers.forEach((layer) => leafletMap.removeLayer(layer));
       imageMarkers = images.map((image) => {
-        const color = currentImage?.url === image.url ? '#FF0000' : '#b2b2b2';
-        const markerHtmlStyles = `\n background-color: ${color}; width: 14px; height: 14px; display: block; left: -7px; top: -7px; position: relative; border-radius: 7px 7px 0; transform: rotate(45deg);`;
+        const color = currentImage?.url === image.url ? '#FF0000' : '#656565';
+        let markerHtmlStyles = `\n background-color: ${color}; width: 14px; height: 14px; display: block; position: relative; transform: rotate(45deg);`;
+        if (currentImage?.url !== image.url) {
+          markerHtmlStyles = markerHtmlStyles + ' border-radius: 7px 7px 0;';
+        }
         const icon = divIcon({
           className: 'my-custom-pin',
-          iconAnchor: [4, 9],
+          iconAnchor: [8, 19],
           html: `<span style="${markerHtmlStyles}" />`,
         });
         return marker(image.location, { icon }).on('click', () =>
