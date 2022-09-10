@@ -25,7 +25,7 @@ const state$ = new BehaviorSubject<State>(state);
 
 function selectedImages(groups: Group[]): Image[] {
   return groups
-    .filter((group) => group.visible)
+    .filter((group) => group.selected)
     .map((group) => group.images)
     .reduce((acc, curr) => [...acc, ...curr], []);
 }
@@ -116,7 +116,7 @@ export default {
         group.id === id
           ? {
               ...group,
-              visible: !group.visible,
+              selected: !group.selected,
             }
           : group
       );

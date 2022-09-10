@@ -21,7 +21,7 @@ export function initItinerary() {
         store.set.toggleGroupVisibility(group.id);
       };
       item.querySelector('.title')!.innerHTML = group.name;
-      if (group.visible) {
+      if (group.selected) {
         item.querySelector('.title')!.className = 'bold';
         item.style.backgroundColor = '#111111';
       }

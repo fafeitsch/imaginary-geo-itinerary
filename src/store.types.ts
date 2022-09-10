@@ -28,7 +28,7 @@ export interface Group {
   name: string;
   tracks: Track[];
   id: string;
-  visible: boolean;
+  selected: boolean;
   images: Image[];
 }
 
