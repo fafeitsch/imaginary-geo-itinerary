@@ -20,6 +20,11 @@ to the currently selected groups. The location of the current image is emphasize
 IGI offers the possibility to either show the map only, the images only, or the combined view (see Presenting below).
 
 ## Using IGI
+### Give it a try
+
+To just run the app with a sample itinerary (see `itinerary`) folder, either clone the repository and
+execute `npm i && npm run dev`, or download the released binary (if available) and put it into any running webserver.
+
 ### Prerequisites
 
 You need the following prerequisites for using IGI:
@@ -73,6 +78,8 @@ IGI has the following limitations:
 * The length of tracks is only shown if the respective group was selected at least once. This is because the tracks'
   length are stored in the GPX files which are only loaded at the moment they should be shown in the map. A workaround
   is to pre-select all groups in the itinerary. For large itineraries, this can lead to real long loading times.
+* GPS coordinates stored inside the image files are not used because that would mean to download all image files
+  to show the markers in the map. Thus, image coordinates must be given manually.
 * If you want to display elevation data in the itinerary, you have to use the `info` field of the tracks. I don't use
   the elevation stored in the GPX file because it is not accurate and there is no easy and free way to load
   elevation data into GPX files (apart from the inaccurate SRTM dataset).

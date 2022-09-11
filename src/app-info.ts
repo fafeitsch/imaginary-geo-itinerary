@@ -21,6 +21,7 @@ export function initAppInfo() {
 
   appInfoButton = document.getElementById('info-opener')! as HTMLButtonElement;
   appInfo = document.getElementById('app-info')! as HTMLDivElement;
+  document.getElementById('app-version')!.innerText = `Version: ` + APP_VERSION;
   appInfoButton.addEventListener('click', () => {
     toggleAppInfo();
   });
