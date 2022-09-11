@@ -6,6 +6,7 @@ import {
   Map,
   Marker,
   marker,
+  TileLayer,
   tileLayer,
 } from 'leaflet';
 // @ts-ignore
@@ -16,12 +17,21 @@ import { combineLatest, take } from 'rxjs';
 
 let leafletMap: Map;
 let mapElement: HTMLDivElement;
+let tiles: TileLayer;
 
 export function initMap() {
   mapElement = document.getElementById('map') as HTMLDivElement;
   leafletMap = LFMap(mapElement).setView(latLng(50, 9), 10);
-  const url = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
-  tileLayer(url).addTo(leafletMap);
+  store.get.tiles$.subscribe((tilesInfo) => {
+    if (tiles) {
+      leafletMap.removeLayer(tiles);
+    }
+    if (tilesInfo?.server) {
+      tiles = tileLayer(tilesInfo.server, {
+        attribution: tilesInfo.attribution || '',
+      }).addTo(leafletMap);
+    }
+  });
   let trackLayers: Layer[] = [];
   leafletMap.on('click', (event) => {
     console.log([event.latlng.lat, event.latlng.lng]);

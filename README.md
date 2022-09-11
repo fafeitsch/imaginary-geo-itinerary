@@ -49,6 +49,9 @@ You need the following prerequisites for using IGI:
    format is self-explanatory. Information on the non-self-explanatory parts:
    
    * The `map` property defines the center of the map if the initial selection of the group does not have any images.
+   * The `tiles` contains information about map tile retrieval and attribution. For your personal use, it should be fine to use the
+     OSM tile server (see example), as long as you follow their [Tile Usage Policy](https://operations.osmfoundation.org/policies/tiles/).
+     If you can't meet their policies, please consider alternatives.
    * The `info` property allows you to specify a link in the app info menu, which appears after pressing the (i)-button.
      This can be used to link to a legally required contact information if you plan to make the itinerary available to the public.
    * The `types` property defines the means of transport you used during the trip. Each type has a color and an optional

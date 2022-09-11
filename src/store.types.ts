@@ -2,6 +2,10 @@ export interface Itinerary {
   groups: Group[];
   name: string;
   types: { [key: string]: { color: string; symbol: string } };
+  tiles: {
+    server: string;
+    attribution: string;
+  };
   map: {
     lat: number;
     lng: number;

@@ -1,5 +1,9 @@
 {
   "name": "My Hiking Tour",
+  "tiles": {
+    "server": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+    "attribution": "Tile Information & Tile Images: © OpenStreetMap <a href=\"https://www.openstreetmap.org/copyright\">contributors</a>"
+  },
   "map": {
     "lat": 49.88925732897995,
     "lng": 9.832763671875002,
@@ -29,9 +33,9 @@
   },
   "groups": [
     {
-      "name": "Day 1 – Travel to starting point",
+      "name": "Day 1 – Travel to start",
       "id": "day1",
-      "selected": true,
+      "selected": false,
       "images": [],
       "tracks": [
         {
@@ -84,7 +88,7 @@
     {
       "name": "Day 3",
       "id": "day3",
-      "selected": false,
+      "selected": true,
       "images": [
         {
           "url": "herbs.jpg",
@@ -109,7 +113,7 @@
     {
       "name": "Day 4",
       "id": "day4",
-      "selected": false,
+      "selected": true,
       "images": [
         {
           "url": "fields.jpg",

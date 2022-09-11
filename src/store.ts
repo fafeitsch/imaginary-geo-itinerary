@@ -11,6 +11,10 @@ interface State {
     zoom: number;
   };
   info: { label: string; link: string };
+  tiles: {
+    server: string;
+    attribution: string;
+  };
 }
 
 const state: State = {
@@ -19,6 +23,10 @@ const state: State = {
   currentImage: undefined,
   defaultCenter: { lat: 0, lng: 0, zoom: 1 },
   info: { label: '', link: '' },
+  tiles: {
+    server: '',
+    attribution: '',
+  },
 };
 
 const state$ = new BehaviorSubject<State>(state);
@@ -54,6 +62,10 @@ export default {
       map((state) => state.info),
       distinctUntilChanged()
     ),
+    tiles$: state$.pipe(
+      map((state) => state.tiles),
+      distinctUntilChanged()
+    ),
     groups$: state$.pipe(
       map((state) => state.groups),
       distinctUntilChanged()
@@ -82,6 +94,7 @@ export default {
         defaultCenter: itinerary.map,
         name: itinerary.name,
         info: itinerary.info || { link: '', label: '' },
+        tiles: itinerary.tiles,
       });
     },
     trackLength(groupId: string, index: number, length: number) {
