@@ -81,7 +81,7 @@ export function initMap() {
       imageMarkers = images
         .filter((image) => image.location)
         .map((image) => {
-          const color = currentImage?.url === image.url ? '#FF0000' : '#656565';
+          const color = currentImage?.url === image.url ? '#000000' : '#656565';
           let markerHtmlStyles = `\n background-color: ${color}; width: 14px; height: 14px; display: block; position: relative; transform: rotate(45deg);`;
           if (currentImage?.url !== image.url) {
             markerHtmlStyles = markerHtmlStyles + ' border-radius: 7px 7px 0;';
@@ -91,9 +91,13 @@ export function initMap() {
             iconAnchor: [8, 19],
             html: `<span style="${markerHtmlStyles}" />`,
           });
-          return marker(image.location!, { icon }).on('click', () =>
+          const result = marker(image.location!, { icon }).on('click', () =>
             store.set.currentImage(image)
           );
+          if (currentImage?.url === image.url) {
+            result.setZIndexOffset(1000);
+          }
+          return result;
         });
       imageMarkers.forEach((marker) => marker.addTo(leafletMap));
     }

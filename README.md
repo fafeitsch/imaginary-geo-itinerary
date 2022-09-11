@@ -49,7 +49,7 @@ You need the following prerequisites for using IGI:
    format is self-explanatory. Information on the non-self-explanatory parts:
    
    * The `map` property defines the center of the map if the initial selection of the group does not have any images.
-   * The `tiles` contains information about map tile retrieval and attribution. For your personal use, it should be fine to use the
+   * The `tiles` property contains information about map tile retrieval and attribution. For your personal use, it should be fine to use the
      OSM tile server (see example), as long as you follow their [Tile Usage Policy](https://operations.osmfoundation.org/policies/tiles/).
      If you can't meet their policies, please consider alternatives.
    * The `info` property allows you to specify a link in the app info menu, which appears after pressing the (i)-button.
