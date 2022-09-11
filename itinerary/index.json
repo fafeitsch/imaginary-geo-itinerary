@@ -58,11 +58,13 @@
       "images": [
         {
           "url": "forest.jpg",
-          "location": [50.053143474989454, 9.727020263671877]
+          "location": [50.053143474989454, 9.727020263671877],
+          "alt": "The forest where I hiked."
         },
         {
           "url": "path.jpg",
-          "location": [49.991284125840664, 9.76238250732422]
+          "location": [49.991284125840664, 9.76238250732422],
+          "alt": "Image of a path in the woods."
         }
       ],
       "tracks": [
@@ -86,11 +88,13 @@
       "images": [
         {
           "url": "herbs.jpg",
-          "location": [49.94421249094379, 9.785825014114382]
+          "location": [49.94421249094379, 9.785825014114382],
+          "alt": "Herbs along the way"
         },
         {
           "url": "way.jpg",
-          "location": [49.93282585249191, 9.804697036743166]
+          "location": [49.93282585249191, 9.804697036743166],
+          "alt": "A way in the forest."
         }
       ],
       "tracks": [
@@ -109,6 +113,7 @@
       "images": [
         {
           "url": "fields.jpg",
+          "alt": "Fields in the landscape.",
           "location": [49.83154681935647, 9.848706722259523]
         }
       ],

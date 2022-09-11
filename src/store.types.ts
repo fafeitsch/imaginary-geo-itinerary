@@ -34,5 +34,6 @@ export interface Group {
 
 export interface Image {
   url: string;
-  location: [number, number];
+  location?: [number, number];
+  alt?: '';
 }

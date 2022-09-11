@@ -53,34 +53,38 @@ export function initMap() {
     updateMapSize();
   });
   let imageMarkers: Marker[] = [];
+  store.get.currentImage$.subscribe((currentImage) => {
+    if (currentImage && currentImage.location) {
+      leafletMap.setView(
+        {
+          lat: currentImage?.location[0],
+          lng: currentImage?.location[1],
+        },
+        undefined,
+        { animate: false }
+      );
+    }
+  });
   combineLatest([store.get.currentImage$, store.get.images$]).subscribe(
     ([currentImage, images]) => {
-      if (currentImage) {
-        leafletMap.setView(
-          {
-            lat: currentImage?.location[0],
-            lng: currentImage?.location[1],
-          },
-          undefined,
-          { animate: false }
-        );
-      }
       imageMarkers.forEach((layer) => leafletMap.removeLayer(layer));
-      imageMarkers = images.map((image) => {
-        const color = currentImage?.url === image.url ? '#FF0000' : '#656565';
-        let markerHtmlStyles = `\n background-color: ${color}; width: 14px; height: 14px; display: block; position: relative; transform: rotate(45deg);`;
-        if (currentImage?.url !== image.url) {
-          markerHtmlStyles = markerHtmlStyles + ' border-radius: 7px 7px 0;';
-        }
-        const icon = divIcon({
-          className: 'my-custom-pin',
-          iconAnchor: [8, 19],
-          html: `<span style="${markerHtmlStyles}" />`,
+      imageMarkers = images
+        .filter((image) => image.location)
+        .map((image) => {
+          const color = currentImage?.url === image.url ? '#FF0000' : '#656565';
+          let markerHtmlStyles = `\n background-color: ${color}; width: 14px; height: 14px; display: block; position: relative; transform: rotate(45deg);`;
+          if (currentImage?.url !== image.url) {
+            markerHtmlStyles = markerHtmlStyles + ' border-radius: 7px 7px 0;';
+          }
+          const icon = divIcon({
+            className: 'my-custom-pin',
+            iconAnchor: [8, 19],
+            html: `<span style="${markerHtmlStyles}" />`,
+          });
+          return marker(image.location!, { icon }).on('click', () =>
+            store.set.currentImage(image)
+          );
         });
-        return marker(image.location, { icon }).on('click', () =>
-          store.set.currentImage(image)
-        );
-      });
       imageMarkers.forEach((marker) => marker.addTo(leafletMap));
     }
   );
@@ -104,7 +108,7 @@ export function hideMap() {
 export function updateMapSize() {
   leafletMap.invalidateSize(false);
   store.get.currentImage$.pipe(take(1)).subscribe((image) => {
-    if (image) {
+    if (image && image.location) {
       leafletMap.setView(
         { lat: image.location[0], lng: image.location[1] },
         undefined,

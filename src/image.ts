@@ -11,9 +11,12 @@ export function initImage() {
   store.get.currentImage$.subscribe((image) => {
     if (!image) {
       imageOutlet.src = 'itinerary/favicon.png';
+      imageOutlet.alt =
+        'Favicon placeholder image because no there is no image in the current selection.';
       return;
     }
     imageOutlet.src = 'itinerary/' + image.url;
+    imageOutlet.alt = image.alt || '';
   });
   imageOutlet.addEventListener('click', () => {
     store.set.nextImage();
