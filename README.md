@@ -1,4 +1,5 @@
-#Imaginary Geo Itinerary
+Imaginary Geo Itinerary
+===
 
 _Imaginary Geo Itinerary_ (IGI) is an image slideshow web application designed for 
 presenting pictures from a road trip, such as hiking tours, bicycle journeys, etc:
@@ -51,3 +52,31 @@ You need the following prerequisites for using IGI:
      images and this saves a few bytes compared to the object notation.
 6. Navigate to your server's URL and enjoy your itinerary.
 
+###Presenting
+
+IGI opens in the default view, showing the itinerary, itinerary, and the first image of all pre-selected
+groups. To select or deselect a group, click it in the itinerary. 
+
+To cycle through the images, press '→' (or space) and '←'. To go to the next picture, you can also
+click on the current picture. Alternatively, the current image can be selected by pressing a marker in the
+map.
+
+Press 'm' to make the map fullscreen, or press 'i' to make the image fullscreen. Press 'ESC' to 
+reset to the default view.
+
+Press 'h' to open the help menu. There, you find the keymapping, too.
+
+## Limitations and Issues
+
+IGI has the following limitations:
+
+* The length of tracks is only shown if the respective group was selected at least once. This is because the tracks'
+  length are stored in the GPX files which are only loaded at the moment they should be shown in the map. A workaround
+  is to pre-select all groups in the itinerary. For large itineraries, this can lead to real long loading times.
+* If you want to display elevation data in the itinerary, you have to use the `info` field of the tracks. I don't use
+  the elevation stored in the GPX file because it is not accurate and there is no easy and free way to load
+  elevation data into GPX files (apart from the inaccurate SRTM dataset).
+
+## License
+
+See LICENSE file.

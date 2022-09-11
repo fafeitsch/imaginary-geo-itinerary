@@ -50,6 +50,7 @@ body.addEventListener('keyup', (event) => {
       store.set.previousImage();
       break;
     }
+    case 'h':
     case 'F1': {
       toggleAppInfo();
       break;
