@@ -21,7 +21,10 @@ let tiles: TileLayer;
 
 export function initMap() {
   mapElement = document.getElementById('map') as HTMLDivElement;
-  leafletMap = LFMap(mapElement).setView(latLng(50, 9), 10);
+  leafletMap = LFMap(mapElement, { keyboard: false }).setView(
+    latLng(50, 9),
+    10
+  );
   store.get.tiles$.subscribe((tilesInfo) => {
     if (tiles) {
       leafletMap.removeLayer(tiles);
