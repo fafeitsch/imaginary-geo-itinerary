@@ -1,8 +1,8 @@
 Imaginary Geo Itinerary
 ===
 
-_Imaginary Geo Itinerary_ (IGI) is an image slideshow web application designed for 
-presenting pictures from a road trip, such as hiking tours, bicycle journeys, etc:
+_Imaginary Geo Itinerary_ (IGI) is a media slideshow web application designed for 
+presenting pictures or videos from a road trip, such as hiking tours, bicycle journeys, etc:
 
 ![Screenshot from the app](./screenshots/app.png)
 
@@ -14,10 +14,10 @@ Day 2, Day 3, and Day 4 are selected.
 
 All tracks of all selected groups are shown in the map in the lower part of the screen. All image locations are shown, too.
 
-The upper part of the app consists of the image slideshow. It slides through the pictures belonging
-to the currently selected groups. The location of the current image is emphasized in the map.
+The upper part of the app consists of the slideshow. It slides through the pictures or videos belonging
+to the currently selected groups. The location of the current media object is emphasized in the map.
 
-IGI offers the possibility to either show the map only, the images only, or the combined view (see Presenting below).
+IGI offers the possibility to either show the map only, the pictures or video only, or the combined view (see Presenting below).
 
 ## Using IGI
 ### Give it a try
@@ -32,7 +32,7 @@ You need the following prerequisites for using IGI:
 * any web server, e.g. Apache, nginx, …
 * a text editor and basic knowledge of JSON
 * your tracks in form of GPX files
-* pictures from your journey, together with their coordinates (unfortunately, it doesn't suffice to 
+* pictures and/or videos from your journey, together with their coordinates (unfortunately, it doesn't suffice to 
   have the coordinates stored inside the images, see Limitations below.)
 * the IGI binaries (e.g. downloaded from Github's release page) __or__
 * npm installed to build the app from scratch: `npm i && npm run build`. The binaries are then stored in the `dist` directory.
@@ -41,7 +41,7 @@ You need the following prerequisites for using IGI:
 
 1. Move IGI's binaries into your web server.
 2. Create a directory `itinerary` in the same directory where IGI is.
-3. Move your images and GPX files into `itinerary`. You can use any subdirectory structure you like.
+3. Move your images and/or videos (mp4 format) and GPX files into `itinerary`. You can use any subdirectory structure you like.
 4. Replace the `favicon.png` by an appropriate image of your own. The favicon is not only shown
    in the browser's toolbar, but also in the general image area if the current group selection does not contain
    an image.
@@ -86,6 +86,7 @@ IGI has the following limitations:
 * If you want to display elevation data in the itinerary, you have to use the `info` field of the tracks. I don't use
   the elevation stored in the GPX file because it is not accurate and there is no easy and free way to load
   elevation data into GPX files (apart from the inaccurate SRTM dataset).
+* The `url` of media objects should be unique. It is not possible to use images or videos with the same url. 
 
 ## License
 
