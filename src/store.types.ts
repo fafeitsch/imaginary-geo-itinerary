@@ -40,4 +40,5 @@ export interface Image {
   url: string;
   location?: [number, number];
   alt?: '';
+  type?: 'video';
 }

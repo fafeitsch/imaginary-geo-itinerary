@@ -4,7 +4,7 @@ import { hideMap, initMap, showMap } from './map';
 import store from './store';
 import { hideItinerary, initItinerary, showItinerary } from './itinerary';
 import { Itinerary } from './store.types';
-import { hideImage, initImage, showImage } from './image';
+import { hideMedia, initImage, showMedia } from './media';
 import { initAppInfo, setAppInfoButtonColor, toggleAppInfo } from './app-info';
 
 fetch('itinerary/index.json')
@@ -41,8 +41,8 @@ body.addEventListener('keyup', (event) => {
       enableDefaultMode();
       break;
     }
-    case 'ArrowRight':
-    case ' ': {
+    case 'ArrowRight': {
+      // case ' ': {
       store.set.nextImage();
       break;
     }
@@ -59,21 +59,21 @@ body.addEventListener('keyup', (event) => {
 });
 
 function enableMapMode() {
-  hideImage();
+  hideMedia();
   hideItinerary();
   setAppInfoButtonColor('black');
   showMap();
 }
 
 function enableDefaultMode() {
-  showImage('64h');
+  showMedia('64h');
   showItinerary();
   setAppInfoButtonColor('inherit');
   showMap();
 }
 
 function enableImageMode() {
-  showImage('100vh');
+  showMedia('100vh');
   hideMap();
   hideItinerary();
   setAppInfoButtonColor('inherit');
