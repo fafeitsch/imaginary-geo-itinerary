@@ -19,6 +19,10 @@ to the currently selected groups. The location of the current media object is em
 
 IGI offers the possibility to either show the map only, the pictures or video only, or the combined view (see Presenting below).
 
+## Changelog
+
+Please use GitHub's auto-generated changelog. Major version changed indicate incompatible changes.
+
 ## Using IGI
 ### Give it a try
 
@@ -65,7 +69,7 @@ You need the following prerequisites for using IGI:
 IGI opens in the default view, showing the itinerary, itinerary, and the first image of all pre-selected
 groups. To select or deselect a group, click it in the itinerary. 
 
-To cycle through the images, press '→' (or space) and '←'. To go to the next picture, you can also
+To cycle through the images, press '→' and '←'. To go to the next picture, you can also
 click on the current picture. Alternatively, the current image can be selected by pressing a marker in the
 map.
 
