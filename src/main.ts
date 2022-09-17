@@ -29,6 +29,14 @@ const body = document.getElementsByTagName('body')[0];
 
 body.addEventListener('keyup', (event) => {
   switch (event.key) {
+    case 'a': {
+      store.set.selectAllGroups();
+      break;
+    }
+    case 'n': {
+      store.set.selectNoGroup();
+      break;
+    }
     case 'm': {
       enableMapMode();
       break;

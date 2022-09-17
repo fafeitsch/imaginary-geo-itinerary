@@ -124,6 +124,16 @@ export default {
     previousImage() {
       selectImage(-1);
     },
+    selectAllGroups() {
+      const groups = [...state$.value.groups];
+      groups.forEach((group) => (group.selected = true));
+      state$.next({ ...state$.value, groups });
+    },
+    selectNoGroup() {
+      const groups = [...state$.value.groups];
+      groups.forEach((group) => (group.selected = false));
+      state$.next({ ...state$.value, groups });
+    },
     toggleGroupVisibility(id: string) {
       let groups = state$.value.groups.map((group) =>
         group.id === id
