@@ -1,10 +1,10 @@
 import { BehaviorSubject, distinctUntilChanged, map } from 'rxjs';
-import { Group, Medium, Itinerary } from './store.types';
+import { Group, Itinerary, Medium } from './store.types';
 
 interface State {
   name: string;
   groups: Group[];
-  currentImage: Medium | undefined;
+  currentMedium: Medium | undefined;
   defaultCenter: {
     lat: number;
     lng: number;
@@ -20,7 +20,7 @@ interface State {
 const state: State = {
   name: 'IGI',
   groups: [],
-  currentImage: undefined,
+  currentMedium: undefined,
   defaultCenter: { lat: 0, lng: 0, zoom: 1 },
   info: { label: '', link: '' },
   tiles: {
@@ -30,27 +30,6 @@ const state: State = {
 };
 
 const state$ = new BehaviorSubject<State>(state);
-
-function selectedImages(groups: Group[]): Medium[] {
-  return groups
-    .filter((group) => group.selected)
-    .map((group) => group.media)
-    .reduce((acc, curr) => [...acc, ...curr], []);
-}
-
-function selectImage(increment: number) {
-  const images = selectedImages(state$.value.groups);
-  const index = images.findIndex(
-    (image) => image.url === state$.value.currentImage?.url
-  );
-  let currentImage = undefined;
-  increment =
-    increment < 0 ? images.length + Math.abs(increment) - 2 : increment;
-  if (index >= 0) {
-    currentImage = images[(index + increment) % images.length];
-  }
-  state$.next({ ...state$.value, currentImage });
-}
 
 export default {
   get: {
@@ -74,8 +53,8 @@ export default {
       map((state) => selectedImages(state.groups)),
       distinctUntilChanged()
     ),
-    currentImage$: state$.pipe(
-      map((state) => state.currentImage),
+    currentMedium$: state$.pipe(
+      map((state) => state.currentMedium),
       distinctUntilChanged()
     ),
     defaultCenter$: state$.pipe(
@@ -90,7 +69,7 @@ export default {
       state$.next({
         ...state$.value,
         groups: itinerary.groups,
-        currentImage,
+        currentMedium: currentImage,
         defaultCenter: itinerary.map,
         name: itinerary.name,
         info: itinerary.info || { link: '', label: '' },
@@ -116,7 +95,7 @@ export default {
       });
     },
     currentImage(currentImage: Medium) {
-      state$.next({ ...state$.value, currentImage });
+      state$.next({ ...state$.value, currentMedium: currentImage });
     },
     nextImage() {
       selectImage(1);
@@ -127,12 +106,21 @@ export default {
     selectAllGroups() {
       const groups = [...state$.value.groups];
       groups.forEach((group) => (group.selected = true));
-      state$.next({ ...state$.value, groups });
+      const currentMedium = computeCurrentMedium(groups);
+      state$.next({
+        ...state$.value,
+        groups,
+        currentMedium,
+      });
     },
     selectNoGroup() {
       const groups = [...state$.value.groups];
       groups.forEach((group) => (group.selected = false));
-      state$.next({ ...state$.value, groups });
+      state$.next({
+        ...state$.value,
+        groups,
+        currentMedium: undefined,
+      });
     },
     toggleGroupVisibility(id: string) {
       let groups = state$.value.groups.map((group) =>
@@ -143,18 +131,42 @@ export default {
             }
           : group
       );
-      const images = selectedImages(groups);
-      let currentImage = state$.value.currentImage;
-      if (
-        images.every((image) => image.url !== state$.value.currentImage?.url)
-      ) {
-        currentImage = images.length > 0 ? images[0] : undefined;
-      }
+      const currentMedium = computeCurrentMedium(groups);
       state$.next({
         ...state$.value,
         groups,
-        currentImage,
+        currentMedium,
       });
     },
   },
 };
+
+function computeCurrentMedium(groups: Group[]) {
+  const images = selectedImages(groups);
+  let currentImage = state$.value.currentMedium;
+  if (images.every((image) => image.url !== state$.value.currentMedium?.url)) {
+    currentImage = images.length > 0 ? images[0] : undefined;
+  }
+  return currentImage;
+}
+
+function selectedImages(groups: Group[]): Medium[] {
+  return groups
+    .filter((group) => group.selected)
+    .map((group) => group.media)
+    .reduce((acc, curr) => [...acc, ...curr], []);
+}
+
+function selectImage(increment: number) {
+  const images = selectedImages(state$.value.groups);
+  const index = images.findIndex(
+    (image) => image.url === state$.value.currentMedium?.url
+  );
+  let currentImage = undefined;
+  increment =
+    increment < 0 ? images.length + Math.abs(increment) - 2 : increment;
+  if (index >= 0) {
+    currentImage = images[(index + increment) % images.length];
+  }
+  state$.next({ ...state$.value, currentMedium: currentImage });
+}

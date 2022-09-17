@@ -66,7 +66,7 @@ export function initMap() {
     updateMapSize();
   });
   let imageMarkers: Marker[] = [];
-  store.get.currentImage$.subscribe((currentImage) => {
+  store.get.currentMedium$.subscribe((currentImage) => {
     if (currentImage && currentImage.location) {
       leafletMap.setView(
         {
@@ -78,7 +78,7 @@ export function initMap() {
       );
     }
   });
-  combineLatest([store.get.currentImage$, store.get.images$]).subscribe(
+  combineLatest([store.get.currentMedium$, store.get.images$]).subscribe(
     ([currentImage, images]) => {
       imageMarkers.forEach((layer) => leafletMap.removeLayer(layer));
       imageMarkers = images
@@ -124,7 +124,7 @@ export function hideMap() {
 
 export function updateMapSize() {
   leafletMap.invalidateSize(false);
-  store.get.currentImage$.pipe(take(1)).subscribe((image) => {
+  store.get.currentMedium$.pipe(take(1)).subscribe((image) => {
     if (image && image.location) {
       leafletMap.setView(
         { lat: image.location[0], lng: image.location[1] },

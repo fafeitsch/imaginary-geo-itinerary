@@ -17,16 +17,21 @@ export function initImage() {
     'media-container'
   )! as HTMLDivElement;
 
-  store.get.currentImage$.subscribe((media) => {
-    if (!media) {
+  store.get.currentMedium$.subscribe((medium) => {
+    if (!medium) {
       imageOutlet.src = 'itinerary/favicon.png';
       imageOutlet.alt =
         'Favicon placeholder image because no there is no image in the current selection.';
+      if (mediaContainer.children.length > 0) {
+        mediaContainer.replaceChild(imageOutlet, mediaContainer.children[0]);
+      } else {
+        mediaContainer.append(imageOutlet);
+      }
       return;
     }
 
-    if (media.type === 'video') {
-      videoOutlet.src = 'itinerary/' + media.url;
+    if (medium.type === 'video') {
+      videoOutlet.src = 'itinerary/' + medium.url;
       if (mediaContainer.children.length > 0) {
         mediaContainer.replaceChild(videoOutlet, mediaContainer.children[0]);
       } else {
@@ -34,8 +39,8 @@ export function initImage() {
       }
       videoOutlet.focus();
     } else {
-      imageOutlet.src = 'itinerary/' + media.url;
-      imageOutlet.alt = media.alt || '';
+      imageOutlet.src = 'itinerary/' + medium.url;
+      imageOutlet.alt = medium.alt || '';
       if (mediaContainer.children.length > 0) {
         mediaContainer.replaceChild(imageOutlet, mediaContainer.children[0]);
       } else {
