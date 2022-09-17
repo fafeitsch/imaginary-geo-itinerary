@@ -33,12 +33,12 @@ export interface Group {
   tracks: Track[];
   id: string;
   selected: boolean;
-  images: Image[];
+  media: Medium[];
 }
 
-export interface Image {
+export interface Medium {
   url: string;
   location?: [number, number];
   alt?: '';
-  type?: 'video';
+  type?: 'video' | 'image';
 }

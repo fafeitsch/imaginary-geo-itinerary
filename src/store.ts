@@ -1,10 +1,10 @@
 import { BehaviorSubject, distinctUntilChanged, map } from 'rxjs';
-import { Group, Image, Itinerary } from './store.types';
+import { Group, Medium, Itinerary } from './store.types';
 
 interface State {
   name: string;
   groups: Group[];
-  currentImage: Image | undefined;
+  currentImage: Medium | undefined;
   defaultCenter: {
     lat: number;
     lng: number;
@@ -31,10 +31,10 @@ const state: State = {
 
 const state$ = new BehaviorSubject<State>(state);
 
-function selectedImages(groups: Group[]): Image[] {
+function selectedImages(groups: Group[]): Medium[] {
   return groups
     .filter((group) => group.selected)
-    .map((group) => group.images)
+    .map((group) => group.media)
     .reduce((acc, curr) => [...acc, ...curr], []);
 }
 
@@ -115,7 +115,7 @@ export default {
         ),
       });
     },
-    currentImage(currentImage: Image) {
+    currentImage(currentImage: Medium) {
       state$.next({ ...state$.value, currentImage });
     },
     nextImage() {

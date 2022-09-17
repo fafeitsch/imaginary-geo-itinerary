@@ -36,7 +36,7 @@
       "name": "Day 1 – Travel to start",
       "id": "day1",
       "selected": false,
-      "images": [],
+      "media": [],
       "tracks": [
         {
           "type": "bus",
@@ -59,7 +59,7 @@
       "name": "Day 2",
       "id": "day2",
       "selected": true,
-      "images": [
+      "media": [
         {
           "url": "forest.jpg",
           "location": [50.053143474989454, 9.727020263671877],
@@ -89,7 +89,13 @@
       "name": "Day 3",
       "id": "day3",
       "selected": true,
-      "images": [
+      "media": [
+        {
+          "type": "video",
+          "url": "mouse.mp4",
+          "location": [49.959128091873865, 9.758202462086476],
+          "alt": "A mouse in the underwoods"
+        },
         {
           "url": "herbs.jpg",
           "location": [49.94421249094379, 9.785825014114382],
@@ -114,7 +120,7 @@
       "name": "Day 4",
       "id": "day4",
       "selected": true,
-      "images": [
+      "media": [
         {
           "url": "fields.jpg",
           "alt": "Fields in the landscape.",

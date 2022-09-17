@@ -7,6 +7,8 @@ imageOutlet.style.objectFit = 'contain';
 let videoOutlet: HTMLVideoElement = document.createElement('video');
 videoOutlet.classList.add('w-100', 'h-100');
 videoOutlet.controls = true;
+videoOutlet.autoplay = true;
+videoOutlet.setAttribute('controlslist', 'nofullscreen');
 
 let mediaContainer: HTMLDivElement;
 
@@ -25,24 +27,24 @@ export function initImage() {
 
     if (media.type === 'video') {
       videoOutlet.src = 'itinerary/' + media.url;
-      if (mediaContainer.children[0]) {
+      if (mediaContainer.children.length > 0) {
         mediaContainer.replaceChild(videoOutlet, mediaContainer.children[0]);
       } else {
         mediaContainer.append(videoOutlet);
       }
+      videoOutlet.focus();
     } else {
       imageOutlet.src = 'itinerary/' + media.url;
       imageOutlet.alt = media.alt || '';
-      if (mediaContainer.children[0]) {
+      if (mediaContainer.children.length > 0) {
         mediaContainer.replaceChild(imageOutlet, mediaContainer.children[0]);
       } else {
         mediaContainer.append(imageOutlet);
       }
+      imageOutlet.focus();
     }
   });
-  mediaContainer.addEventListener('click', () => {
-    store.set.nextImage();
-  });
+  mediaContainer.addEventListener('click', () => store.set.nextImage());
 }
 
 export function showMedia(maxHeight: string) {
