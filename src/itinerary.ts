@@ -1,5 +1,4 @@
 import store from './store';
-import { updateMapSize } from './map';
 
 let itineraryContainer: HTMLDivElement;
 
@@ -18,7 +17,7 @@ export function initItinerary() {
         .querySelector('div')!
         .cloneNode(true) as HTMLDivElement;
       item.onclick = () => {
-        store.set.toggleGroupVisibility(group.id);
+        store.set.toggleGroupSelection(group.id);
       };
       item.querySelector('.title')!.innerHTML = group.name;
       if (group.selected) {
@@ -43,7 +42,15 @@ export function initItinerary() {
       });
       itineraryContainer.appendChild(item);
     });
-    updateMapSize();
+    store.events.triggerViewSettled();
+  });
+  store.get.itineraryVisible$.subscribe((visible) => {
+    if (visible) {
+      showItinerary();
+    } else {
+      hideItinerary();
+    }
+    store.events.triggerViewSettled();
   });
 }
 

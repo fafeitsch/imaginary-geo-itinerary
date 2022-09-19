@@ -1,4 +1,10 @@
-import { BehaviorSubject, distinctUntilChanged, map } from 'rxjs';
+import {
+  BehaviorSubject,
+  distinctUntilChanged,
+  filter,
+  map,
+  Subject,
+} from 'rxjs';
 import { Group, Itinerary, Medium } from './store.types';
 
 interface State {
@@ -15,6 +21,11 @@ interface State {
     server: string;
     attribution: string;
   };
+  view: {
+    itinerary: boolean;
+    map: boolean;
+    media: boolean;
+  };
 }
 
 const state: State = {
@@ -27,9 +38,15 @@ const state: State = {
     server: '',
     attribution: '',
   },
+  view: {
+    map: true,
+    media: true,
+    itinerary: true,
+  },
 };
 
 const state$ = new BehaviorSubject<State>(state);
+const events$ = new Subject<String>();
 
 export default {
   get: {
@@ -49,7 +66,7 @@ export default {
       map((state) => state.groups),
       distinctUntilChanged()
     ),
-    images$: state$.pipe(
+    media$: state$.pipe(
       map((state) => selectedImages(state.groups)),
       distinctUntilChanged()
     ),
@@ -59,6 +76,18 @@ export default {
     ),
     defaultCenter$: state$.pipe(
       map((state) => state.defaultCenter),
+      distinctUntilChanged()
+    ),
+    mapVisible$: state$.pipe(
+      map((state) => state.view.map),
+      distinctUntilChanged()
+    ),
+    itineraryVisible$: state$.pipe(
+      map((state) => state.view.itinerary),
+      distinctUntilChanged()
+    ),
+    mediaVisible$: state$.pipe(
+      map((state) => state.view.media),
       distinctUntilChanged()
     ),
   },
@@ -122,7 +151,14 @@ export default {
         currentMedium: undefined,
       });
     },
-    toggleGroupVisibility(id: string) {
+    toggleVisibility(type: 'map' | 'itinerary' | 'media') {
+      const view = { ...state$.value.view };
+      view[type] = !view[type];
+      const noneVisible = !(view.map || view.media || view.itinerary);
+      view.media = noneVisible ? true : view.media;
+      state$.next({ ...state$.value, view });
+    },
+    toggleGroupSelection(id: string) {
       let groups = state$.value.groups.map((group) =>
         group.id === id
           ? {
@@ -138,6 +174,12 @@ export default {
         currentMedium,
       });
     },
+  },
+  events: {
+    triggerViewSettled() {
+      events$.next('viewSettled');
+    },
+    viewSettled$: events$.pipe(filter((event) => event === 'viewSettled')),
   },
 };
 

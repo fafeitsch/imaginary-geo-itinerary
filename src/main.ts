@@ -1,11 +1,11 @@
 import './style.scss';
 import 'leaflet/dist/leaflet.css';
-import { hideMap, initMap, showMap } from './map';
+import { initMap } from './map';
 import store from './store';
-import { hideItinerary, initItinerary, showItinerary } from './itinerary';
+import { initItinerary } from './itinerary';
 import { Itinerary } from './store.types';
-import { hideMedia, initImage, showMedia } from './media';
-import { initAppInfo, setAppInfoButtonColor, toggleAppInfo } from './app-info';
+import { initImage } from './media';
+import { initAppInfo, toggleAppInfo } from './app-info';
 
 fetch('itinerary/index.json')
   .then((response) => response.json())
@@ -38,19 +38,18 @@ body.addEventListener('keyup', (event) => {
       break;
     }
     case 'm': {
-      enableMapMode();
+      store.set.toggleVisibility('map');
       break;
     }
     case 'i': {
-      enableImageMode();
+      store.set.toggleVisibility('media');
       break;
     }
-    case 'Escape': {
-      enableDefaultMode();
+    case 'l': {
+      store.set.toggleVisibility('itinerary');
       break;
     }
     case 'ArrowRight': {
-      // case ' ': {
       store.set.nextImage();
       break;
     }
@@ -65,24 +64,3 @@ body.addEventListener('keyup', (event) => {
     }
   }
 });
-
-function enableMapMode() {
-  hideMedia();
-  hideItinerary();
-  setAppInfoButtonColor('black');
-  showMap();
-}
-
-function enableDefaultMode() {
-  showMedia('64h');
-  showItinerary();
-  setAppInfoButtonColor('inherit');
-  showMap();
-}
-
-function enableImageMode() {
-  showMedia('100vh');
-  hideMap();
-  hideItinerary();
-  setAppInfoButtonColor('inherit');
-}
