@@ -92,13 +92,15 @@ function addMediaMarkers() {
       .map((image) => {
         const color = currentMedium?.url === image.url ? '#000000' : '#656565';
         let markerHtmlStyles = `\n background-color: ${color}; width: 14px; height: 14px; display: block; position: relative; transform: rotate(45deg);`;
+        let dataTest = 'map-active-marker';
         if (currentMedium?.url !== image.url) {
           markerHtmlStyles = markerHtmlStyles + ' border-radius: 7px 7px 0;';
+          dataTest = 'map-marker';
         }
         const icon = divIcon({
           className: 'my-custom-pin',
           iconAnchor: [8, 19],
-          html: `<span style='${markerHtmlStyles}' />`,
+          html: `<span style='${markerHtmlStyles}' data-test="${dataTest}" />`,
         });
         const result = marker(image.location!, { icon }).on('click', () =>
           store.set.currentImage(image)

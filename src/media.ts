@@ -38,6 +38,7 @@ function setFaviconFallbackImage() {
   imageOutlet.src = 'itinerary/favicon.png';
   imageOutlet.alt =
     'Favicon placeholder image because no there is no image in the current selection.';
+  imageOutlet.title = imageOutlet.alt;
   if (mediaContainer.children.length > 0) {
     mediaContainer.replaceChild(imageOutlet, mediaContainer.children[0]);
   } else {
@@ -47,6 +48,7 @@ function setFaviconFallbackImage() {
 
 function setVideoMedium(medium: Medium) {
   videoOutlet.src = 'itinerary/' + medium.url;
+  videoOutlet.title = medium.alt || '';
   if (mediaContainer.children.length > 0) {
     mediaContainer.replaceChild(videoOutlet, mediaContainer.children[0]);
   } else {
@@ -58,6 +60,7 @@ function setVideoMedium(medium: Medium) {
 function setImageMedium(medium: Medium) {
   imageOutlet.src = 'itinerary/' + medium.url;
   imageOutlet.alt = medium.alt || '';
+  imageOutlet.title = imageOutlet.alt;
   if (mediaContainer.children.length > 0) {
     mediaContainer.replaceChild(imageOutlet, mediaContainer.children[0]);
   } else {

@@ -26,7 +26,3 @@ export function initAppInfo() {
     toggleAppInfo();
   });
 }
-
-export function setAppInfoButtonColor(color: string) {
-  appInfoButton.style.color = color;
-}

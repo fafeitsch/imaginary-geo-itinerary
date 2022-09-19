@@ -1,0 +1,81 @@
+{
+  "groups": [
+    {
+      "name": "Day 1 – Travel to start",
+      "tracks": [
+        {
+          "name": "Höchberg → Würzburg",
+          "indicator": "\uD83D\uDE8C",
+          "color": "rgb(73, 0, 146)",
+          "distance": "– km",
+          "info": ""
+        },
+        {
+          "name": "Würzburg → Gemünden",
+          "indicator": "\uD83D\uDE84",
+          "color": "rgb(146, 0, 0)",
+          "distance": "– km",
+          "info": ""
+        },
+        {
+          "name": "Walk to hotel",
+          "indicator": "\uD83D\uDC3E",
+          "color": "rgb(219, 109, 0)",
+          "distance": "– km",
+          "info": ""
+        }
+      ]
+    },
+    {
+      "selected": true,
+      "name": "Day 2",
+      "tracks": [
+        {
+          "name": "Taxi to starting point",
+          "distance": "5 km",
+          "info": "",
+          "color": "rgb(0, 73, 73)",
+          "indicator": "\uD83D\uDE95"
+        },
+        {
+          "name": "Walking to Karlstadt",
+          "distance": "21 km",
+          "info": "↑ 417m ↓ 455m",
+          "color": "rgb(219, 109, 0)",
+          "indicator": "\uD83D\uDC3E"
+        }
+      ]
+    },
+    { "selected": true,
+      "name": "Day 3",
+      "tracks": [
+        {
+          "name": "Walking to Zellingen",
+          "distance": "11 km",
+          "info": "↑ 95m ↓ 88m",
+          "color": "rgb(219, 109, 0)",
+          "indicator": "\uD83D\uDC3E"
+        }
+      ]
+    },
+    {
+      "selected": true,
+      "name": "Day 4",
+      "tracks": [
+        {
+          "name": "Walking to Zell",
+          "distance": "15 km",
+          "info": "↑ 318m ↓ 314m",
+          "color": "rgb(219, 109, 0)",
+          "indicator": "\uD83D\uDC3E"
+        }, {
+          "name": "Taxi to home",
+          "distance": "9 km",
+          "info": "",
+          "color": "rgb(0, 73, 73)",
+          "indicator": "\uD83D\uDE95"
+        }
+      ]
+    }
+  ]
+}
