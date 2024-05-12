@@ -21,13 +21,13 @@ IGI offers the possibility to either show the map only, the pictures or video on
 
 ## Changelog
 
-Please use GitHub's auto-generated changelog. Major version changed indicate incompatible changes.
+Please use GitHub's auto-generated changelog. Major version changes indicate incompatible changes.
 
 ## Using IGI
 ### Give it a try
 
 To just run the app with a sample itinerary (see `itinerary`) folder, either clone the repository and
-execute `npm i && npm run dev`, or download the released binary (if available) and put it into any running webserver.
+execute `npm i && npm run dev`, or download the released binary (if available) and put it into any running webserver (only works in the root directory).
 
 ### Prerequisites
 
@@ -39,7 +39,18 @@ You need the following prerequisites for using IGI:
 * pictures and/or videos from your journey, together with their coordinates (unfortunately, it doesn't suffice to 
   have the coordinates stored inside the images, see Limitations below.)
 * the IGI binaries (e.g. downloaded from Github's release page) __or__
-* npm installed to build the app from scratch: `npm i && npm run build`. The binaries are then stored in the `dist` directory.
+* npm installed 
+
+### Building the app for deployment
+
+You only need to build the app if you want to deploy it on a webserver. For a local
+presentation of your images, the development mode `npm run dev` normally suffices.
+
+To build the app from scratch run: `npm i && npm run build -- --base=/base/path`. The binaries are then stored in the `dist` directory. Please adapt your
+  base path accordingly. If you put the IGI files into the directory `/journey/slideshow/` so that IGI can be reached by `https://example.com/journey/slideshow`, then
+  you _must_ use `npm run build -- --base=/journey/slideshow/`.
+
+Copy the contents of the `dist` directory to your webserver (and _only_ the contents of the `dist`directory).
 
 ### Creating an itinerary
 
@@ -91,6 +102,9 @@ IGI has the following limitations:
   the elevation stored in the GPX file because it is not accurate and there is no easy and free way to load
   elevation data into GPX files (apart from the inaccurate SRTM dataset).
 * The `url` of media objects should be unique. It is not possible to use images or videos with the same url. 
+* Currently, the path where the app can be deployed on the webserver is fixed. That means, that if you build the app with
+  `npm run build`, the artifacts in the `dist`directory can only ever be deployed to the root directory of a webserver.
+  If you want to use a different directory in the webserver, you must use a different artifact built with `npm run build -- --base=/your/path`
 
 ## License
 
